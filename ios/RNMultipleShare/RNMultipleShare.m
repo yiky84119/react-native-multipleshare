@@ -14,7 +14,7 @@
 
 NSString* mName;
 
-RCT_EXPORT_MODULE(RNMultipleShare);
+RCT_EXPORT_MODULE();
 
 - (dispatch_queue_t)methodQueue
 {

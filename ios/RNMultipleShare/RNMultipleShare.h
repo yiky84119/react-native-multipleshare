@@ -13,7 +13,7 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
-@interface RNMultipleShare : NSObject<RCTBridgeModule, RecordAudioDelegate>
+@interface RNMultipleShare : NSObject<RCTBridgeModule>
 
 
 @end
