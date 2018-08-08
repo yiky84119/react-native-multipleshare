@@ -1,0 +1,25 @@
+{
+  "name": "react-native-multipleshare",
+  "version": "1.0.0",
+  "description": "Share Multiple Images Library for React Native apps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yiky84119/react-native-multipleshare.git"
+  },
+  "keywords": [
+    "react-native",
+    "share",
+    "multiple",
+    "component"
+  ],
+  "author": "Nevo",
+  "license": "Apache License",
+  "bugs": {
+    "url": "https://github.com/yiky84119/react-native-multipleshare/issues"
+  },
+  "homepage": "https://github.com/yiky84119/react-native-multipleshare#readme"
+}
