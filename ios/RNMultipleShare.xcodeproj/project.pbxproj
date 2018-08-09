@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DE2CB749211B371C004DDD25 /* RNMultipleShare.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2CB748211B371C004DDD25 /* RNMultipleShare.m */; };
 		DE2CB74A211B371C004DDD25 /* RNMultipleShare.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DE2CB747211B371C004DDD25 /* RNMultipleShare.h */; };
+		DE2CB886211B5992004DDD25 /* MultipleShareItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2CB885211B5992004DDD25 /* MultipleShareItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		DE2CB744211B371C004DDD25 /* libRNMultipleShare.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNMultipleShare.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2CB747211B371C004DDD25 /* RNMultipleShare.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNMultipleShare.h; sourceTree = "<group>"; };
 		DE2CB748211B371C004DDD25 /* RNMultipleShare.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNMultipleShare.m; sourceTree = "<group>"; };
+		DE2CB884211B597F004DDD25 /* MultipleShareItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultipleShareItem.h; sourceTree = "<group>"; };
+		DE2CB885211B5992004DDD25 /* MultipleShareItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultipleShareItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 			children = (
 				DE2CB747211B371C004DDD25 /* RNMultipleShare.h */,
 				DE2CB748211B371C004DDD25 /* RNMultipleShare.m */,
+				DE2CB884211B597F004DDD25 /* MultipleShareItem.h */,
+				DE2CB885211B5992004DDD25 /* MultipleShareItem.m */,
 			);
 			path = RNMultipleShare;
 			sourceTree = "<group>";
@@ -122,6 +127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE2CB886211B5992004DDD25 /* MultipleShareItem.m in Sources */,
 				DE2CB749211B371C004DDD25 /* RNMultipleShare.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
