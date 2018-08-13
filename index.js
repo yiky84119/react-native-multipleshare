@@ -1,6 +1,16 @@
 import { NativeModules } from "react-native";
 
-var MultipleShare = NativeModules.RNMultipleShare;
+var RNMultipleShare = NativeModules.RNMultipleShare;
 
-export default MultipleShare;
-var resolveAssetSource = require("react-native/Libraries/Image/resolveAssetSource");
+const Module = { QQ: 0, WECHAT: 1 };
+const Scene = { SESSION: 0, TIMELINE: 1 };
+
+function share(array: Array<string>, module: Module, scene: Scene): Promise<boolean> {
+    return RNMultipleShare.share(array, module, scene);
+}
+
+export {
+    Module,
+    Scene,
+    share
+}
