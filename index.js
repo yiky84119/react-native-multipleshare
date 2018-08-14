@@ -9,7 +9,7 @@ function share(array: Array<string>, module: Module, scene: Scene): Promise<bool
     return RNMultipleShare.share(array, module, scene);
 }
 
-export {
+module.exports = {
     Module,
     Scene,
     share
