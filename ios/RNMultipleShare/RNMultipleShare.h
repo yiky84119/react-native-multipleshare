@@ -14,6 +14,4 @@
 #endif
 
 @interface RNMultipleShare : NSObject<RCTBridgeModule>
-
-
 @end

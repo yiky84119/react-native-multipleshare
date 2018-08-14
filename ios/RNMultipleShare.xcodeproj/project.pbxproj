@@ -8,19 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		DE2CB749211B371C004DDD25 /* RNMultipleShare.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2CB748211B371C004DDD25 /* RNMultipleShare.m */; };
-		DE2CB74A211B371C004DDD25 /* RNMultipleShare.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DE2CB747211B371C004DDD25 /* RNMultipleShare.h */; };
+		DE2CB74A211B371C004DDD25 /* RNMultipleShare.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DE2CB747211B371C004DDD25 /* RNMultipleShare.h */; };
 		DE2CB886211B5992004DDD25 /* MultipleShareItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2CB885211B5992004DDD25 /* MultipleShareItem.m */; };
+		DEE70C1A21228B30005AF331 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE70C0C21228B2F005AF331 /* AFHTTPSessionManager.m */; };
+		DEE70C1B21228B30005AF331 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE70C1021228B30005AF331 /* AFNetworkReachabilityManager.m */; };
+		DEE70C1C21228B30005AF331 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE70C1221228B30005AF331 /* AFURLSessionManager.m */; };
+		DEE70C1D21228B30005AF331 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE70C1721228B30005AF331 /* AFSecurityPolicy.m */; };
+		DEE70C1E21228B30005AF331 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE70C1821228B30005AF331 /* AFURLResponseSerialization.m */; };
+		DEE70C1F21228B30005AF331 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE70C1921228B30005AF331 /* AFURLRequestSerialization.m */; };
+		DEE70C972122A337005AF331 /* DownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE70C962122A337005AF331 /* DownloadTask.m */; };
+		DEE70C9A2122A4E8005AF331 /* DownloadTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE70C992122A4E8005AF331 /* DownloadTaskManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		DE2CB742211B371C004DDD25 /* CopyFiles */ = {
+		DE2CB742211B371C004DDD25 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				DE2CB74A211B371C004DDD25 /* RNMultipleShare.h in CopyFiles */,
+				DE2CB74A211B371C004DDD25 /* RNMultipleShare.h in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -31,6 +40,24 @@
 		DE2CB748211B371C004DDD25 /* RNMultipleShare.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNMultipleShare.m; sourceTree = "<group>"; };
 		DE2CB884211B597F004DDD25 /* MultipleShareItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultipleShareItem.h; sourceTree = "<group>"; };
 		DE2CB885211B5992004DDD25 /* MultipleShareItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultipleShareItem.m; sourceTree = "<group>"; };
+		DEE70C0C21228B2F005AF331 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = RNMultipleShare/AFNetworking/AFNetworking/AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		DEE70C0D21228B2F005AF331 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = RNMultipleShare/AFNetworking/AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		DEE70C0E21228B2F005AF331 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = RNMultipleShare/AFNetworking/AFNetworking/AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		DEE70C0F21228B30005AF331 /* AFCompatibilityMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFCompatibilityMacros.h; path = RNMultipleShare/AFNetworking/AFNetworking/AFCompatibilityMacros.h; sourceTree = "<group>"; };
+		DEE70C1021228B30005AF331 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = RNMultipleShare/AFNetworking/AFNetworking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		DEE70C1121228B30005AF331 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = RNMultipleShare/AFNetworking/AFNetworking/AFURLSessionManager.h; sourceTree = "<group>"; };
+		DEE70C1221228B30005AF331 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = RNMultipleShare/AFNetworking/AFNetworking/AFURLSessionManager.m; sourceTree = "<group>"; };
+		DEE70C1321228B30005AF331 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = RNMultipleShare/AFNetworking/AFNetworking/AFSecurityPolicy.h; sourceTree = "<group>"; };
+		DEE70C1421228B30005AF331 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = RNMultipleShare/AFNetworking/AFNetworking/AFNetworking.h; sourceTree = "<group>"; };
+		DEE70C1521228B30005AF331 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = RNMultipleShare/AFNetworking/AFNetworking/AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		DEE70C1621228B30005AF331 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = RNMultipleShare/AFNetworking/AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		DEE70C1721228B30005AF331 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = RNMultipleShare/AFNetworking/AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
+		DEE70C1821228B30005AF331 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = RNMultipleShare/AFNetworking/AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		DEE70C1921228B30005AF331 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = RNMultipleShare/AFNetworking/AFNetworking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		DEE70C962122A337005AF331 /* DownloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadTask.m; sourceTree = "<group>"; };
+		DEE70C982122A343005AF331 /* DownloadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadTask.h; sourceTree = "<group>"; };
+		DEE70C992122A4E8005AF331 /* DownloadTaskManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadTaskManager.m; sourceTree = "<group>"; };
+		DEE70C9B2122A4F3005AF331 /* DownloadTaskManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadTaskManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +74,7 @@
 		DE2CB73B211B371C004DDD25 = {
 			isa = PBXGroup;
 			children = (
+				DEE70C01212289FF005AF331 /* AFNetworking */,
 				DE2CB746211B371C004DDD25 /* RNMultipleShare */,
 				DE2CB745211B371C004DDD25 /* Products */,
 			);
@@ -67,8 +95,41 @@
 				DE2CB748211B371C004DDD25 /* RNMultipleShare.m */,
 				DE2CB884211B597F004DDD25 /* MultipleShareItem.h */,
 				DE2CB885211B5992004DDD25 /* MultipleShareItem.m */,
+				DEE70C962122A337005AF331 /* DownloadTask.m */,
+				DEE70C982122A343005AF331 /* DownloadTask.h */,
+				DEE70C992122A4E8005AF331 /* DownloadTaskManager.m */,
+				DEE70C9B2122A4F3005AF331 /* DownloadTaskManager.h */,
 			);
 			path = RNMultipleShare;
+			sourceTree = "<group>";
+		};
+		DEE70C01212289FF005AF331 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				DEE70C0A21228B17005AF331 /* AFNetworking */,
+			);
+			name = AFNetworking;
+			sourceTree = "<group>";
+		};
+		DEE70C0A21228B17005AF331 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				DEE70C0F21228B30005AF331 /* AFCompatibilityMacros.h */,
+				DEE70C1521228B30005AF331 /* AFHTTPSessionManager.h */,
+				DEE70C0C21228B2F005AF331 /* AFHTTPSessionManager.m */,
+				DEE70C1421228B30005AF331 /* AFNetworking.h */,
+				DEE70C1621228B30005AF331 /* AFNetworkReachabilityManager.h */,
+				DEE70C1021228B30005AF331 /* AFNetworkReachabilityManager.m */,
+				DEE70C1321228B30005AF331 /* AFSecurityPolicy.h */,
+				DEE70C1721228B30005AF331 /* AFSecurityPolicy.m */,
+				DEE70C0D21228B2F005AF331 /* AFURLRequestSerialization.h */,
+				DEE70C1921228B30005AF331 /* AFURLRequestSerialization.m */,
+				DEE70C0E21228B2F005AF331 /* AFURLResponseSerialization.h */,
+				DEE70C1821228B30005AF331 /* AFURLResponseSerialization.m */,
+				DEE70C1121228B30005AF331 /* AFURLSessionManager.h */,
+				DEE70C1221228B30005AF331 /* AFURLSessionManager.m */,
+			);
+			name = AFNetworking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,7 +141,7 @@
 			buildPhases = (
 				DE2CB740211B371C004DDD25 /* Sources */,
 				DE2CB741211B371C004DDD25 /* Frameworks */,
-				DE2CB742211B371C004DDD25 /* CopyFiles */,
+				DE2CB742211B371C004DDD25 /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -127,8 +188,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEE70C1C21228B30005AF331 /* AFURLSessionManager.m in Sources */,
+				DEE70C1A21228B30005AF331 /* AFHTTPSessionManager.m in Sources */,
 				DE2CB886211B5992004DDD25 /* MultipleShareItem.m in Sources */,
+				DEE70C9A2122A4E8005AF331 /* DownloadTaskManager.m in Sources */,
+				DEE70C1B21228B30005AF331 /* AFNetworkReachabilityManager.m in Sources */,
+				DEE70C1D21228B30005AF331 /* AFSecurityPolicy.m in Sources */,
+				DEE70C1E21228B30005AF331 /* AFURLResponseSerialization.m in Sources */,
 				DE2CB749211B371C004DDD25 /* RNMultipleShare.m in Sources */,
+				DEE70C972122A337005AF331 /* DownloadTask.m in Sources */,
+				DEE70C1F21228B30005AF331 /* AFURLRequestSerialization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +319,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/RNMultipleShare/AFNetworking/**",
+					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/../../../React/**",
+				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -261,6 +336,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/RNMultipleShare/AFNetworking/**",
+					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/../../../React/**",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

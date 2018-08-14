@@ -10,52 +10,102 @@
 
 #import "RNMultipleShare.h"
 #import "MultipleShareItem.h"
+#include "DownloadTask.h"
+#include "DownloadTaskManager.h"
 
 #define KCompressibilityFactor 1280.00
+#define MaxShareImageCount 9
 
 @implementation RNMultipleShare
 
 NSString* mName;
+DownloadTaskManager* mTaskManager;
 
 RCT_EXPORT_MODULE();
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        mTaskManager = [[DownloadTaskManager alloc] init];
+    }
+    return self;
+}
 
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();
 }
 
-RCT_EXPORT_METHOD(share:(NSArray *)shareArray shareWithResolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+RCT_EXPORT_METHOD(share:(NSArray *)shareArray module:(NSInteger)module scene:(NSInteger)scene resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
     
+    UInt64 recordTime = [[NSDate date] timeIntervalSince1970]*1000;
+    NSString* mPrefix = [NSString stringWithFormat:@"%lld_", recordTime];
     NSUInteger size = [shareArray count];
-    NSMutableArray *array = [[NSMutableArray alloc]init];
-    for (int i = 0; i < size; i++) {
-        NSString *URL = shareArray[i];
-        //NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:URL]];
-        NSString* tempDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
-                                                                       NSUserDomainMask,
-                                                                       YES) lastObject];
-        NSString *fullPath = [tempDirectory stringByAppendingPathComponent: [NSString stringWithFormat:@"%@", URL]];
-        UIImage *imagerang = [UIImage imageWithContentsOfFile:fullPath];
-        
-//        NSString *path_sandox = NSHomeDirectory();
-//        NSString *imagePath = [path_sandox stringByAppendingString:[NSString stringWithFormat:@"/Documents/ShareWX%d.jpg",i]];
-//        [UIImagePNGRepresentation(imagerang) writeToFile:imagePath atomically:YES];
-        
-        NSURL *shareobj = [NSURL fileURLWithPath:fullPath];
-        
-        /** 这里做个解释 imagerang : UIimage 对象  shareobj:NSURL 对象 这个方法的实际作用就是 在吊起微信的分享的时候 传递给他 UIimage对象,在分享的时候 实际传递的是 NSURL对象 达到我们分享九宫格的目的 */
-        
-        MultipleShareItem *item = [[MultipleShareItem alloc] initWithData:imagerang andFile:shareobj];
-        
-        [array addObject:item];
+    NSMutableArray *mShareArray = [NSMutableArray arrayWithCapacity: MaxShareImageCount];
+    NSMutableDictionary *mShare = [NSMutableDictionary dictionaryWithCapacity: MaxShareImageCount];
+    
+    NSString* cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
+                                                                   NSUserDomainMask,
+                                                                   YES) lastObject];
+    NSString *tempDirectory = [cacheDirectory stringByAppendingPathComponent:@"MShareCache"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    BOOL isDir = NO;
+    BOOL existed = [fileManager fileExistsAtPath:tempDirectory isDirectory:&isDir];
+    if (!(isDir == YES && existed == YES)) {
+        [fileManager createDirectoryAtPath:tempDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    } else {
+        [self removeContentsOfDirectory:tempDirectory withExtension:nil ];
     }
+
+    for (int i = 0; i < size && i < MaxShareImageCount; i++) {
+        NSString *shareUrl = shareArray[i];
+        if ([shareUrl hasPrefix:@"http"]) {
+            NSString* name = [NSString stringWithFormat:@"%@_%d.jpg", mPrefix, i];
+            NSString *fullPath = [tempDirectory stringByAppendingPathComponent: name];
+            DownloadTask* task = [[DownloadTask alloc] initWithData:shareUrl filename:fullPath index: i];
+            [mTaskManager append:task];
+        } else {
+            [mShare setObject:[NSURL fileURLWithPath:shareUrl] forKey:[NSString stringWithFormat:@"%d", i]];
+        }
+    }
+    [mTaskManager start: ^(NSMutableDictionary *result) {
+        NSLog(@"File downloaded");
+        [mShare addEntriesFromDictionary:result];
+        
+        for (int i=0;i<mShare.count;i++) {
+            NSURL* url = [mShare objectForKey:[NSString stringWithFormat:@"%d", i]];
+            UIImage *imagerang = [UIImage imageWithContentsOfFile:[url path]];
+            MultipleShareItem *item = [[MultipleShareItem alloc] initWithData:imagerang andFile:url];
+            [mShareArray addObject:item];
+        }
+        
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:mShareArray applicationActivities:nil];
+        UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+        [rootViewController presentViewController:activityVC animated:TRUE completion:nil];
+        resolve(@"test");
+    }];
     
-    
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:array applicationActivities:nil];
-    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    [rootViewController presentViewController:activityVC animated:TRUE completion:nil];
-    
-    resolve(@"test");
+
+}
+
+-(void)removeContentsOfDirectory:(NSString*)directory withExtension:(NSString*)extension
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:directory error:NULL];
+    NSEnumerator *e = [contents objectEnumerator];
+    NSString *filename;
+    while ((filename = [e nextObject])) {
+        if (extension != nil) {
+            if ([[filename pathExtension] hasPrefix:extension]) {
+                [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:filename] error:NULL];
+            }
+        }else{
+            [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:filename] error:NULL];
+        }
+    }
 }
 
 #pragma mark - 压缩一张图片 最大宽高1280 类似于微信算法
