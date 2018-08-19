@@ -34,6 +34,7 @@ public class HttpUtils implements NextTask {
     private int mHandledCount = 0;
     private String mFilePrefix;
     private Context mContext;
+    private File mFile;
 
 
     public HttpUtils(Context context) {
@@ -60,6 +61,16 @@ public class HttpUtils implements NextTask {
 
     public void start(HttpUtilsCallback callback) {
         this.mHttpUtilsCallback = callback;
+        mFile = new File(mContext.getExternalCacheDir(), "MShareCache");
+        if (!mFile.isDirectory()) {
+            mFile.mkdir();
+        } else {
+            File[] files = mFile.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                File f = files[i];
+                f.delete();
+            }
+        }
         this.mFilePrefix = Long.toString(new Date().getTime());
         this.mQueueResult.clear();
         mCount = 0;
@@ -73,7 +84,7 @@ public class HttpUtils implements NextTask {
             ++mCount;
             int index = mQueue.get(mIndex++);
             Call call = mQueueHandle.get(index);
-            call.enqueue(new HttpCallback(new File(mContext.getExternalCacheDir(),
+            call.enqueue(new HttpCallback(new File(mFile,
                     this.mFilePrefix + "_" + Integer.toString(mIndex) + ".jpg"), index,this));
         }
 
