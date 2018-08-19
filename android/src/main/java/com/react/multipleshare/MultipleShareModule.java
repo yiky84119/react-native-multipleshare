@@ -116,6 +116,7 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
                     imageUris.add(Uri.fromFile(new File(array.valueAt(i))));
                 }
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
                 mContext.startActivity(intent);
             }
         });
