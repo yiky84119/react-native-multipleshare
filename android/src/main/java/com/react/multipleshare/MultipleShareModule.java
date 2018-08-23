@@ -48,6 +48,7 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
     public void share(ReadableArray shareArray, final Integer module,
                       final Integer scene, final Promise promise) {
 
+        mShareArray.clear();
         if (module == Module.QQ) {
             if (Scene.SESSION == scene) {
                 if (!isAppAvilible(mContext,"com.tencent.mobileqq")) {
