@@ -1,6 +1,6 @@
 {
   "name": "react-native-multipleshare",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Share Multiple Images Library for React Native apps.",
   "main": "index.js",
   "scripts": {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
@@ -19,6 +20,7 @@ import com.facebook.react.bridge.ReadableArray;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -75,10 +77,12 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
         if (!dir.isDirectory()) {
             dir.mkdir();
         } else {
-            File[] files = dir.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                File f = files[i];
-                f.delete();
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                File[] files = dir.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    File f = files[i];
+                    f.delete();
+                }
             }
         }
 
@@ -155,9 +159,24 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
                 intent.setType("image/*");
                 ArrayList<Uri> imageUris = new ArrayList<>();
                 for (int i = 0; i < array.size(); i++) {
-                    imageUris.add(Uri.fromFile(array.valueAt(i)));
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                        imageUris.add(Uri.fromFile(array.valueAt(i)));
+                    } else {
+                        //修复微信在7.0崩溃的问题
+                        Uri uri = null;
+                        try {
+                            uri = Uri.parse(android.provider.MediaStore.Images.Media.
+                                    insertImage(mContext.getContentResolver(), array.valueAt(i).getAbsolutePath(),
+                                            array.valueAt(i).getName(), null));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        imageUris.add(uri);
+                    }
+                    //imageUris.add(Uri.fromFile(array.valueAt(i)));
                 }
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
+                Log.i(TAG, imageUris.toString());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
                 mContext.startActivity(intent);
             }
