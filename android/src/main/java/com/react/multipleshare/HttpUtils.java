@@ -12,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -24,7 +23,7 @@ public class HttpUtils implements NextTask {
     private static OkHttpClient singleton;
     private ArrayList<Integer> mQueue = new ArrayList<>();
     private SparseArray<Call> mQueueHandle = new SparseArray<>();
-    private SparseArray<String> mQueueResult = new SparseArray<>();
+    private SparseArray<File> mQueueResult = new SparseArray<>();
     private static final int MAX_WIDTH = 720;
     private static final int MAX_HEIGHT = 1280;
     private static final int MAX_RUNNING_TASK = 2;
@@ -55,23 +54,15 @@ public class HttpUtils implements NextTask {
     public void append(String url, int index) {
         Request request = new Request.Builder().url(url).build();
         Call call = getInstance().newCall(request);
+
         mQueue.add(index);
         mQueueHandle.put(index, call);
     }
 
-    public void start(HttpUtilsCallback callback) {
+    public void start(HttpUtilsCallback callback, File dir, String filePrefix) {
         this.mHttpUtilsCallback = callback;
-        mFile = new File(mContext.getExternalCacheDir(), "MShareCache");
-        if (!mFile.isDirectory()) {
-            mFile.mkdir();
-        } else {
-            File[] files = mFile.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                File f = files[i];
-                f.delete();
-            }
-        }
-        this.mFilePrefix = Long.toString(new Date().getTime());
+        mFile = dir;
+        this.mFilePrefix = filePrefix;
         this.mQueueResult.clear();
         mCount = 0;
         mIndex = 0;
@@ -95,7 +86,7 @@ public class HttpUtils implements NextTask {
         }
     }
 
-    public synchronized void next(int index, String path) {
+    public synchronized void next(int index, File path) {
         mHandledCount++;
         mCount--;
         mQueueResult.put(index, path);
@@ -103,12 +94,12 @@ public class HttpUtils implements NextTask {
     }
 
     @Override
-    public void doNextTask(int index, String path) {
+    public void doNextTask(int index, File path) {
         next(index, path);
     }
 
     public interface HttpUtilsCallback {
-        void onFinish(SparseArray<String> result);
+        void onFinish(SparseArray<File> result);
     }
 
     public class HttpCallback implements Callback {
@@ -183,7 +174,7 @@ public class HttpUtils implements NextTask {
                     }
                 }
             }
-            this.mNextTask.doNextTask(this.mPos, mPath.getAbsolutePath());
+            this.mNextTask.doNextTask(this.mPos, mPath);
             mPath = null;
         }
     }

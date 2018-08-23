@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -15,10 +16,14 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.WritableMap;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MultipleShareModule extends ReactContextBaseJavaModule {
@@ -26,7 +31,7 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
 
     private ReactApplicationContext mContext;
     private HttpUtils mHttpUtils;
-    private SparseArray<String> mShareArray = new SparseArray<>();
+    private SparseArray<File> mShareArray = new SparseArray<>();
 
     public MultipleShareModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -63,33 +68,69 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
         ArrayList arrayList = shareArray.toArrayList();
         int index = 0;
 
+        String filePrefix = Long.toString(new Date().getTime());
+
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MShareCache");
+        if (!dir.isDirectory()) {
+            dir.mkdir();
+        } else {
+            File[] files = dir.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                File f = files[i];
+                f.delete();
+            }
+        }
+
         for(Object url : arrayList) {
-            String tmp = (String)url;
-            if (tmp.contains("http")) {
+           String tmp = (String)url;
+            if (tmp.startsWith("http")) {
                 mHttpUtils.append((String)url, index);
             } else {
-                mShareArray.put(index, (String)url);
+                File newFile = new File(dir,filePrefix + "_" + Integer.toString(index) + ".jpg");
+                try
+                {
+                    File tmpFile = new File(Uri.parse(tmp).getPath());
+
+                    InputStream fosfrom = new FileInputStream(tmpFile);
+                    OutputStream fosto = new FileOutputStream(newFile);
+                    byte bt[] = new byte[1024];
+                    int c;
+                    while ((c = fosfrom.read(bt)) > 0)
+                    {
+                        fosto.write(bt, 0, c);
+                    }
+                    fosfrom.close();
+                    fosto.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                mShareArray.put(index, newFile);
             }
             index++;
         }
 
         mHttpUtils.start(new HttpUtils.HttpUtilsCallback() {
             @Override
-            public void onFinish(SparseArray<String> result) {
+            public void onFinish(SparseArray<File> result) {
                 Log.i(TAG, "onFinish");
 
                 for (int i = 0; i < result.size(); i++) {
                     int key = result.keyAt(i);
                     mShareArray.put(key, result.valueAt(i));
                 }
+                if (mShareArray.size() == 0) {
+                    promise.reject("1000", "无可分享的内容");
+                    return;
+                }
                 doShare(mShareArray, module, scene);
                 promise.resolve(true);
                 Log.i(TAG, mShareArray.toString());
             }
-        });
+        }, dir, filePrefix);
     }
 
-    private void doShare(final SparseArray<String> array, final int module, final int scene) {
+    private void doShare(final SparseArray<File> array, final int module, final int scene) {
         getCurrentActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -113,7 +154,7 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
                 intent.setType("image/*");
                 ArrayList<Uri> imageUris = new ArrayList<>();
                 for (int i = 0; i < array.size(); i++) {
-                    imageUris.add(Uri.fromFile(new File(array.valueAt(i))));
+                    imageUris.add(Uri.fromFile(array.valueAt(i)));
                 }
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
