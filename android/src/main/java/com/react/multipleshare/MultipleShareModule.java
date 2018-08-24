@@ -143,18 +143,24 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
                 ComponentName comp;
                 if (Module.QQ == module){
                     if (Scene.SESSION == scene) {
-                        comp = new ComponentName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");
-                    }else{
-                        comp = new ComponentName("com.qzone", "com.qzonex.module.operation.ui.QZonePublishMoodActivity");
+                        intent.setPackage("com.tencent.mobileqq");
+                        intent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");
+                        //comp = new ComponentName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");
+                    } else {
+                        intent.setPackage("com.qzone");
+                        intent.setClassName("com.qzone", "com.qzonex.module.operation.ui.QZonePublishMoodActivity");
+                        //comp = new ComponentName("com.qzone", "com.qzonex.module.operation.ui.QZonePublishMoodActivity");
                     }
                 } else {
                     if (Scene.SESSION == scene) {
-                        comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
+                        intent.setPackage("com.tencent.mm");
+                        intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
                     } else {
-                        comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
+                        intent.setPackage("com.tencent.mm");
+                        intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
                     }
                 }
-                intent.setComponent(comp);
+                //intent.setComponent(comp);
                 intent.setAction(Intent.ACTION_SEND_MULTIPLE);
                 intent.setType("image/*");
                 ArrayList<Uri> imageUris = new ArrayList<>();
@@ -162,7 +168,6 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                         imageUris.add(Uri.fromFile(array.valueAt(i)));
                     } else {
-                        //修复微信在7.0崩溃的问题
                         Uri uri = null;
                         try {
                             uri = Uri.parse(android.provider.MediaStore.Images.Media.
@@ -173,12 +178,10 @@ public class MultipleShareModule extends ReactContextBaseJavaModule {
                         }
                         imageUris.add(uri);
                     }
-                    //imageUris.add(Uri.fromFile(array.valueAt(i)));
                 }
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
                 Log.i(TAG, imageUris.toString());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
-                mContext.startActivity(intent);
+                getCurrentActivity().startActivity(intent);
             }
         });
     }
